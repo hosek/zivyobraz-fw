@@ -1,0 +1,11 @@
+{
+  "name": "Zivy obraz (GDEW075T7)",
+  "version": "0.1",
+  "home_assistant_domain": "zivy_obraz",
+  "builds": [
+    {
+      "chipFamily": "ESP32",
+      "parts": [{ "path": "firmware/GDEW075T7.bin", "offset": 0 }]
+    }
+  ]
+}

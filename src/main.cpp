@@ -26,7 +26,8 @@
 // Uncomment for correct board
 /////////////////////////////////
 
-//#define ESPink
+#define ESPink
+//#define Inskplay
 //#define ES3ink
 //#define REMAP_SPI
 //#define MakerBadge_revB //also works with A and C
@@ -42,7 +43,7 @@
 // Uncomment correct color capability of your ePaper display
 //////////////////////////////////////////////////////////////
 
-//#define TYPE_BW // black and white
+#define TYPE_BW // black and white
 //#define TYPE_3C // 3 colors - black, white and red/yellow
 //#define TYPE_GRAYSCALE // grayscale - 4 colors
 //#define TYPE_7C // 7 colors
@@ -59,7 +60,7 @@
 //#define D_GDEW042T2     // 400x300, 4.2"
 //#define D_GDEQ042T81    // 400x300, 4.2"
 //#define D_GDEQ0583T31   // 648x480, 5.83"
-//#define D_GDEW075T7     // 800x480, 7.5"
+#define D_GDEW075T7     // 800x480, 7.5"
 //#define D_GDEQ102T90    // 960x640, 10.2"
 
 // Grayscale
@@ -72,6 +73,7 @@
 //#define D_HINK_E075A01  // 640x384, 7.5"
 //#define D_GDEQ0583Z31   // 648x480, 5.83"
 //#define D_GDEY075Z08    // 800x480, 7.5"
+
 
 // 7C
 //#define D_GDEY073D46    // 800x480, 7.3"
@@ -113,6 +115,14 @@ esp_adc_cal_characteristics_t adc_cal;
 #define PIN_RST 39  // RES
 #define PIN_BUSY 42 // PIN_BUSY
 #define ePaperPowerPin 16
+#endif
+
+#ifdef Inskplay
+#define PIN_SS 5   // SS
+#define PIN_DC 26   // D/C
+#define PIN_RST 27  // RES
+#define PIN_BUSY 33 // PIN_BUSY
+#define ePaperPowerPin 2
 #endif
 
 #ifdef MakerBadge_revD
@@ -222,7 +232,10 @@ esp_adc_cal_characteristics_t adc_cal;
 
 // GDEW075T7 - BW, 800x480px, 7.5" 
 #ifdef D_GDEW075T7
-    GxEPD2_BW<GxEPD2_750, GxEPD2_750::HEIGHT> display(GxEPD2_750(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY));
+    //GxEPD2_BW<GxEPD2_750, GxEPD2_750::HEIGHT> display(GxEPD2_750(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY));
+    GxEPD2_BW < GxEPD2_750, GxEPD2_750::HEIGHT / 2 > display(GxEPD2_750(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY)); // GDEW075T8 640x384, UC8159c (IL0371)
+    //GxEPD2_BW < GxEPD2_750_T7, GxEPD2_750_T7::HEIGHT / 2 > display(GxEPD2_750_T7(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY)); // GDEW075T7 800x480, EK79655 (GD7965)
+    //GxEPD2_BW < GxEPD2_750_YT7, GxEPD2_750_YT7::HEIGHT / 2 > display(GxEPD2_750_YT7(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY)); // GDEY075T7 800x480, UC8179 (GD7965)
 #endif
 
 // GDEQ102T90 - BW, 960x640px, 10.2" 
@@ -248,6 +261,11 @@ esp_adc_cal_characteristics_t adc_cal;
 // 3C
 ///////////////////////
 
+// Waveshare - 3C, 200x200px, 1.54" 
+#ifdef D_Waveshare15RBW200
+GxEPD2_3C<GxEPD2_154c, GxEPD2_154c::HEIGHT / 2> display(GxEPD2_154c(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY));
+#endif
+
 // Waveshare42YBW400300 - 3C, 400x300px, 4.2" 
 #ifdef D_Waveshare42YBW400300
     GxEPD2_3C<GxEPD2_420c, GxEPD2_420c::HEIGHT> display(GxEPD2_420c(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY));
@@ -272,6 +290,8 @@ esp_adc_cal_characteristics_t adc_cal;
 #ifdef D_GDEY075Z08
     GxEPD2_3C<GxEPD2_750c_Z08, GxEPD2_750c_Z08::HEIGHT / 2> display(GxEPD2_750c_Z08(PIN_SS, PIN_DC, PIN_RST, PIN_BUSY));
 #endif
+
+
 
 ///////////////////////
 // 7C
@@ -447,7 +467,7 @@ void WiFiInit()
   // Connecting to WiFi
   Serial.println();
   Serial.print("Connecting... ");
-  //WiFi.begin(ssid, pass);
+  //WiFi.begin('ssid', pass);
   WiFi.mode(WIFI_STA);
   WiFiManager wm;
   wm.setWiFiAutoReconnect(true);
