@@ -5,7 +5,7 @@
   "builds": [
     {
       "chipFamily": "ESP32",
-      "parts": [{ "path": "firmware/GDEW075T7.bin", "offset": 0 }]
+      "parts": [{ "path": "firmware/improv-wifi-demo.bin", "offset": 0 }]
     }
   ]
 }

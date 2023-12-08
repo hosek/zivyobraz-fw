@@ -111,8 +111,7 @@
     <script>
       document.querySelectorAll('input[name="type"]').forEach(radio =>
         radio.addEventListener("change", () => {
-          //const button = document.querySelector('esp-web-install-button');
-          const button = document.querySelector('improv-wifi-serial-launch-button');
+          const button = document.querySelector('esp-web-install-button');
           button.manifest = `./manifest_${radio.value}.json`;
           button.classList.remove('invisible');
         }
